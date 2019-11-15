@@ -1,0 +1,43 @@
+\chapter{Selected Concepts and their Justification}
+
+\textbf{User Interface Selected Concept} 
+
+~\\
+We have decided to develop a web-based user interface to setup the communication link. The user interface will allow the operator to input initialization parameters including the LLA and heading bias of the communication link, and the LLA of the aircraft or the relative position of the aircraft depending on which is known. The goal of the user interface is to be as intuitive as possible and require minimal training while still offering full functionality. See artifact XXXXX for user interface details. 
+
+~\\
+
+\textbf{Justification for User Interface Concept} 
+
+ ~\\
+Having a web-based user interface will allow the user to use their own device to setup the communication link. This will make the system easier to use and lead to a more desirable product. An initial layout was made using PowerPoint, then taken to the user experience club at BYU for feedback. Updates to the layout were made based on the feedback received. After several iterations the layout was shown to Mark Catanzaro and Daniel Gunyan of IMSAR for more feedback. After meeting with them we were able to identify the critical features and make further updates. Based on their feedback we are confident that the user interface will be capable of meeting the requirements.
+
+~\\
+\textbf{Tracking Method Selected Concept} 
+
+ ~\\
+The team has decided to use a reactionary method to track the aircraft. The aircraft will broadcast a health message including its location at a rate of about 2 Hz. When the communication link receives the LLA coordinate of the drone, the dish will move to point at that location.  
+
+~\\
+\textbf{Justification for Tracking Method} 
+
+ ~\\
+To justify using a reactionary method as opposed to a predictive method we wrote a Python script that simulates a vehicle in flight. For the simulation we had the drone flying a half mile away from the positioner at a speed of 60 mph. Note that this distance is closer than the nearest distance that will be used in real life. For the simulation we had the drone constantly moving with a box representing an 8\degree field of view updating its location at a rate of 2 Hz. This allowed us to visualize how quickly the aircraft would leave the field of view and if an update rate of 2 Hz could feasibly track it. In our testing the drone was easily maintained within the field of view. For more details on the testing see artifact XXXX.  
+
+ ~\\
+It should also be noted that the current system produced and used by IMSAR also uses a reactionary control method. They are able to maintain a communication link using this method. Because this method has been shown to work and our own simulation supports this, we are confident that this approach will lead to a functioning and desirable end product.  
+
+~\\
+\textbf{System Architecture Selected Concept} 
+
+ ~\\
+We have decided to use a Raspberry Pi 3 to host a web server and run the necessary software to drive the positioner. This approach will allow the user to access the GUI from their own machine so long as they are on the same network as the Pi. Communication between the server and control software will be accomplished with a “single producer single consumer” queue. This will allow the server to write to this queue and the controller to read to the queue. This will maximize the rate of information throughput while still ensuring that the setup is thread safe. That is, the communication between the server and controller will not have any unintended interactions.   
+
+ ~\\
+The latency for this communication setup is consistently less than 3ms, which is well under the necessary time threshold.   
+
+~\\
+\textbf{Justification for System Architecture} 
+
+ ~\\
+In our early meetings with IMSAR, we discussed the possibility of hosting a browser-based GUI on a Raspberry Pi. They were thrilled with this possibility. They liked the convenience of having an easily accessible GUI and the flexibility of the Raspberry Pi. Our testing showed that this design is not only plausible for accomplishing the design requirement, but exceptional. We developed a working version of the system in action to validate its credibility.   

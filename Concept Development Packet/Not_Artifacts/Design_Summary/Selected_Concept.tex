@@ -1,0 +1,21 @@
+\chapter{Selected Concept}
+
+\textbf{User Interface Selected Concept} 
+
+~\\
+We have decided to develop a web-based user interface to setup the communication link. The user interface will allow the operator to input initialization parameters including the LLA and heading bias of the communication link, and the LLA of the aircraft or the relative position of the aircraft depending on which is known. The goal of the user interface is to be as intuitive as possible and require minimal training while still offering full functionality. See artifact XXXXX for user interface details. 
+
+~\\
+\textbf{Tracking Method Selected Concept} 
+
+ ~\\
+The team has decided to use a reactionary method to track the aircraft. The aircraft will broadcast a health message including its location at a rate of about 2 Hz. When the communication link receives the LLA coordinate of the drone, the dish will move to point at that location.  
+
+~\\
+\textbf{System Architecture Selected Concept} 
+
+ ~\\
+We have decided to use a Raspberry Pi 3 to host a web server and run the necessary software to drive the positioner. This approach will allow the user to access the GUI from their own machine so long as they are on the same network as the Pi. Communication between the server and control software will be accomplished with a “single producer single consumer” queue. This will allow the server to write to this queue and the controller to read to the queue. This will maximize the rate of information throughput while still ensuring that the setup is thread safe. That is, the communication between the server and controller will not have any unintended interactions.   
+
+ ~\\
+The latency for this communication setup is consistently less than 3ms, which is well under the necessary time threshold.   
